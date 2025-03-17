@@ -8,3 +8,8 @@ target_link_libraries(llvm-adt-test PRIVATE
     llvm_gtest
     llvm_gtest_main
 )
+
+add_custom_target(check-llvm-adt
+    COMMAND llvm-adt-test
+    DEPENDS llvm-adt-test
+)
