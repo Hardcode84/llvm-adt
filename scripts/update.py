@@ -8,7 +8,12 @@ import shutil
 
 include_files = [
     "llvm-c/DataTypes.h",
+    "llvm-c/Error.h",
+    "llvm-c/ExternC.h",
     "llvm/ADT/ADL.h",
+    "llvm/ADT/APInt.h",
+    "llvm/ADT/APSInt.h",
+    "llvm/ADT/ArrayRef.h",
     "llvm/ADT/DenseMap.h",
     "llvm/ADT/DenseMapInfo.h",
     "llvm/ADT/EpochTracker.h",
@@ -18,22 +23,49 @@ include_files = [
     "llvm/ADT/STLFunctionalExtras.h",
     "llvm/ADT/SmallString.h",
     "llvm/ADT/SmallVector.h",
+    "llvm/ADT/StringExtras.h",
     "llvm/ADT/StringRef.h",
+    "llvm/ADT/StringSwitch.h",
+    "llvm/ADT/Twine.h",
     "llvm/ADT/bit.h",
     "llvm/ADT/iterator.h",
     "llvm/ADT/iterator_range.h",
     "llvm/Support/AlignOf.h",
+    "llvm/Support/AutoConvert.h",
+    "llvm/Support/Chrono.h",
     "llvm/Support/Compiler.h",
     "llvm/Support/DataTypes.h",
+    "llvm/Support/Debug.h",
+    "llvm/Support/Duration.h",
+    "llvm/Support/Endian.h",
+    "llvm/Support/Error.h",
     "llvm/Support/ErrorHandling.h",
+    "llvm/Support/ErrorOr.h",
+    "llvm/Support/FileSystem.h",
+    "llvm/Support/FileSystem/UniqueID.h",
+    "llvm/Support/Format.h",
+    "llvm/Support/FormatCommon.h",
+    "llvm/Support/FormatProviders.h",
+    "llvm/Support/FormatVariadic.h",
+    "llvm/Support/FormatVariadicDetails.h",
+    "llvm/Support/MD5.h",
     "llvm/Support/MathExtras.h",
     "llvm/Support/MemAlloc.h",
+    "llvm/Support/NativeFormatting.h",
     "llvm/Support/PointerLikeTypeTraits.h",
+    "llvm/Support/Process.h",
+    "llvm/Support/Program.h",
     "llvm/Support/ReverseIteration.h",
     "llvm/Support/SwapByteOrder.h",
+    "llvm/Support/float128.h",
     "llvm/Support/raw_os_ostream.h",
     "llvm/Support/raw_ostream.h",
     "llvm/Support/type_traits.h",
+]
+
+src_files = [
+    "Support/raw_os_ostream.cpp",
+    "Support/raw_ostream.cpp",
 ]
 
 test_files = [
@@ -47,14 +79,17 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     llvm_include_dir = Path(args.llvm_root) / "llvm" / "include"
+    llvm_src_dir = Path(args.llvm_root) / "llvm" / "lib"
     llvm_test_dir = Path(args.llvm_root) / "llvm" / "unittests"
 
     dst_dir = Path(args.dst_dir)
     include_dir = dst_dir / "include"
+    src_dir = dst_dir / "lib"
     test_dir = dst_dir / "tests"
 
     dirs = [
         (include_dir, llvm_include_dir, include_files),
+        (src_dir, llvm_src_dir, src_files),
         (test_dir, llvm_test_dir, test_files),
     ]
 
