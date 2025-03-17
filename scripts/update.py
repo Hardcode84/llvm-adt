@@ -5,6 +5,7 @@
 from argparse import ArgumentParser
 from pathlib import Path
 import shutil
+import filecmp
 
 include_files = [
     "llvm-c/DataTypes.h",
@@ -227,8 +228,14 @@ if __name__ == "__main__":
     for dst, src, files in dirs:
         dst.mkdir(parents=True, exist_ok=True)
         for file in files:
-            print(f'Copying "{file}" to "{dst}"')
             file = Path(file)
             dst_path = dst / file.parent
+            src_file = src / file
+            dst_file = dst / file
+            if dst_file.exists() and filecmp.cmp(src_file, dst_file):
+                print(f'"{dst_file}" is up to date')
+                continue
+
+            print(f'Copying "{file}" to "{dst}"')
             dst_path.mkdir(parents=True, exist_ok=True)
-            shutil.copy(src=src / file, dst=dst_path)
+            shutil.copy(src=src_file, dst=dst_path)
