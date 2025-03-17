@@ -23,6 +23,7 @@ include_files = [
     "llvm/ADT/BitmaskEnum.h",
     "llvm/ADT/DenseMap.h",
     "llvm/ADT/DenseMapInfo.h",
+    "llvm/ADT/DenseMapInfoVariant.h",
     "llvm/ADT/DenseSet.h",
     "llvm/ADT/EpochTracker.h",
     "llvm/ADT/FloatingPointMode.h",
@@ -195,7 +196,11 @@ src_files = [
 ]
 
 test_files = [
+    "ADT/CountCopyAndMove.cpp",
+    "ADT/CountCopyAndMove.h",
+    "ADT/DenseMapTest.cpp",
     "ADT/STLExtrasTest.cpp",
+    "ADT/SmallVectorTest.cpp",
 ]
 
 if __name__ == "__main__":
