@@ -32,5 +32,5 @@ target_include_directories(llvm_gtest
   PRIVATE googletest googlemock
 )
 
-# add_subdirectory(UnitTestMain)
+add_subdirectory(UnitTestMain)
 

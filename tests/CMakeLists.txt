@@ -6,4 +6,5 @@ add_executable(llvm-adt-test ${SOURCES_LIST} ${HEADERS_LIST})
 target_link_libraries(llvm-adt-test PRIVATE
     llvm-adt
     llvm_gtest
+    llvm_gtest_main
 )
