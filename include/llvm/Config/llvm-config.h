@@ -15,5 +15,6 @@
 #define HAVE_UNISTD_H 1
 #define HAVE_SYSEXITS_H 1
 #define HAVE_SYS_MMAN_H 1
+#define HAVE_PTHREAD_H 1
 
 #endif
