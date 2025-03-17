@@ -30,6 +30,7 @@ include_files = [
     "llvm/Support/MemAlloc.h",
     "llvm/Support/PointerLikeTypeTraits.h",
     "llvm/Support/ReverseIteration.h",
+    "llvm/Support/SwapByteOrder.h",
     "llvm/Support/raw_os_ostream.h",
     "llvm/Support/raw_ostream.h",
     "llvm/Support/type_traits.h",
