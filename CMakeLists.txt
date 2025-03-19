@@ -17,4 +17,3 @@ if (LLVM_ADT_ENABLE_TESTS)
     add_subdirectory(third-party/unittest)
     add_subdirectory(tests)
 endif()
-

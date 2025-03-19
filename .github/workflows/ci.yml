@@ -14,7 +14,7 @@ jobs:
         build_type: [Debug, Release]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Configure CMake
       run: |
@@ -34,7 +34,7 @@ jobs:
       run: echo "commit=$(cat llvm-sha.txt)" >> $GITHUB_OUTPUT
 
     - name: Checkout LLVM
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: llvm/llvm-project
         ref: ${{ steps.llvm-commit.outputs.commit }}
