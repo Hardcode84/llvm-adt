@@ -11,9 +11,6 @@ permissions:
   contents: write
   pull-requests: write
 
-env:
-  GH_TOKEN: ${{ secrets.UPDATE_PR_TOKEN }}
-
 jobs:
   update-sha:
     runs-on: ubuntu-latest
@@ -47,6 +44,7 @@ jobs:
       - name: Create Pull Request
         if: steps.check-pr.outputs.existing_pr == 'false'
         uses: peter-evans/create-pull-request@v6
+        token: ${{ secrets.UPDATE_PR_TOKEN }}
         with:
           commit-message: 'chore: update LLVM SHA to latest main'
           title: 'chore: update LLVM SHA to latest main'
