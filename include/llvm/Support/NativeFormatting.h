@@ -44,4 +44,3 @@ void write_double(raw_ostream &S, double D, FloatStyle Style,
 }
 
 #endif
-

@@ -304,4 +304,3 @@ bool convertWideToUTF8(const std::wstring &Source, std::string &Result) {
 }
 
 } // end namespace llvm
-
