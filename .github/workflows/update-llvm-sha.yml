@@ -44,10 +44,10 @@ jobs:
       - name: Create Pull Request
         if: steps.check-pr.outputs.existing_pr == 'false'
         uses: peter-evans/create-pull-request@v6
-        token: ${{ secrets.UPDATE_PR_TOKEN }}
         with:
           commit-message: 'chore: update LLVM SHA to latest main'
           title: 'chore: update LLVM SHA to latest main'
+          token: ${{ secrets.UPDATE_PR_TOKEN }}
           body: |
             Auto-update of LLVM SHA to latest main branch commit.
             SHA: ${{ steps.fetch-sha.outputs.llvm_sha }}
