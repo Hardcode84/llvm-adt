@@ -5,7 +5,7 @@ repos:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
     -   id: mixed-line-ending
-        args: ['--fix=lf']  # Force Linux/Mac line endings
+        args: ['--fix=auto']
     -   id: check-yaml
     -   id: check-added-large-files
     -   id: debug-statements
