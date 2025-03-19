@@ -1,0 +1,52 @@
+name: Update LLVM SHA
+
+on:
+  schedule:
+    # Runs every day at 00:00 UTC
+    - cron: '0 0 * * *'
+  # Allow manual triggers
+  workflow_dispatch:
+
+jobs:
+  update-sha:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch latest LLVM SHA
+        id: fetch-sha
+        run: |
+          LLVM_SHA=$(curl -s 'https://api.github.com/repos/llvm/llvm-project/commits/main' | jq -r '.sha')
+          echo "llvm_sha=$LLVM_SHA" >> $GITHUB_OUTPUT
+          echo "Current LLVM SHA: $LLVM_SHA"
+
+      - name: Check for existing PR
+        id: check-pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PR_COUNT=$(gh pr list --json number --search "in:title update LLVM SHA" --state open | jq length)
+          if [ "$PR_COUNT" -gt "0" ]; then
+            echo "existing_pr=true" >> $GITHUB_OUTPUT
+            echo "Found existing PR, skipping creation"
+          else
+            echo "existing_pr=false" >> $GITHUB_OUTPUT
+            echo "No existing PR found"
+          fi
+
+      - name: Update llvm-sha.txt
+        if: steps.check-pr.outputs.existing_pr == 'false'
+        run: echo "${{ steps.fetch-sha.outputs.llvm_sha }}" > llvm-sha.txt
+
+      - name: Create Pull Request
+        if: steps.check-pr.outputs.existing_pr == 'false'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'chore: update LLVM SHA to latest main'
+          title: 'chore: update LLVM SHA to latest main'
+          body: |
+            Auto-update of LLVM SHA to latest main branch commit.
+            SHA: ${{ steps.fetch-sha.outputs.llvm_sha }}
+          branch: update-llvm-sha
+          delete-branch: true
