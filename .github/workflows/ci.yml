@@ -16,6 +16,16 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Configure CMake
+      run: |
+        cmake -B ${{ github.workspace }}/cmake_build \
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+          -DLLVM_ADT_ENABLE_TESTS=ON \
+          -G Ninja
+
+    - name: Build
+      run: cmake --build ${{ github.workspace }}/cmake_build --config ${{ matrix.build_type }}
+
     - name: Get LLVM commit
       id: llvm-commit
       run: echo "commit=$(cat llvm-sha.txt)" >> $GITHUB_OUTPUT
@@ -43,7 +53,7 @@ jobs:
           -DLLVM_ADT_ENABLE_TESTS=ON \
           -G Ninja
 
-    - name: Build
+    - name: Build Updated
       run: cmake --build ${{ github.workspace }}/cmake_build --config ${{ matrix.build_type }}
 
     - name: Run tests
