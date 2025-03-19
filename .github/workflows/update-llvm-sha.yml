@@ -49,4 +49,4 @@ jobs:
             Auto-update of LLVM SHA to latest main branch commit.
             SHA: ${{ steps.fetch-sha.outputs.llvm_sha }}
           branch: update-llvm-sha
-          delete-branch: true 
+          delete-branch: true
