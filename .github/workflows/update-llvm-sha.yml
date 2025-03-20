@@ -39,7 +39,10 @@ jobs:
 
       - name: Update llvm-sha.txt
         if: steps.check-pr.outputs.existing_pr == 'false'
-        run: echo "${{ steps.fetch-sha.outputs.llvm_sha }}" > llvm-sha.txt
+        run: |
+          echo "${{ steps.fetch-sha.outputs.llvm_sha }}" > llvm-sha.txt
+          python scripts/update.py llvm-project/ .
+          pre-commit run --all-files
 
       - name: Create Pull Request
         if: steps.check-pr.outputs.existing_pr == 'false'
