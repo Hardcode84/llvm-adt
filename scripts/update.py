@@ -206,6 +206,16 @@ test_files = [
     "ADT/SmallVectorTest.cpp",
 ]
 
+md5_undef = """
+#undef F
+#undef G
+#undef H
+#undef I
+#undef STEP
+#undef SET
+#undef GET
+"""
+
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("llvm_root")
@@ -241,3 +251,16 @@ if __name__ == "__main__":
             print(f'Copying "{file}" to "{dst}"')
             dst_path.mkdir(parents=True, exist_ok=True)
             shutil.copy(src=src_file, dst=dst_path)
+
+    # Amalgamate lib sources
+    print("Amalgamating lib sources")
+    with open(src_dir / "Support.cpp", "w") as f:
+        for file in src_files:
+            if file.endswith(".inc"):
+                continue
+
+            f.write(f'#include "{file}"\n')
+            if file.endswith("MD5.cpp"):
+                f.write(md5_undef)
+
+    print("Done")
