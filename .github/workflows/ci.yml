@@ -13,6 +13,7 @@ jobs:
     strategy:
       matrix:
         build_type: [Debug, Release]
+        unity_build: [ON, OFF]
 
     steps:
     - uses: actions/checkout@v4
@@ -22,6 +23,7 @@ jobs:
         cmake -B ${{ github.workspace }}/cmake_build \
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
           -DLLVM_ADT_ENABLE_TESTS=ON \
+          -DLLVM_ADT_UNITY_BUILD=${{ matrix.unity_build }} \
           -G Ninja
 
     - name: Build
