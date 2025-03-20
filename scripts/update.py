@@ -260,6 +260,7 @@ if __name__ == "__main__":
                 continue
 
             f.write(f'#include "{file}"\n')
+            f.write("#undef DEBUG_TYPE\n")
             if file.endswith("MD5.cpp"):
                 f.write(md5_undef)
 
