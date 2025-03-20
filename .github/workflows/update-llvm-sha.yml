@@ -37,6 +37,14 @@ jobs:
             echo "No existing PR found"
           fi
 
+      - name: Checkout LLVM
+        uses: actions/checkout@v4
+        if: steps.check-pr.outputs.existing_pr == 'false'
+        with:
+          repository: llvm/llvm-project
+          ref: ${{ steps.fetch-sha.outputs.llvm_sha }}
+          path: llvm-project
+
       - name: Update llvm-sha.txt
         if: steps.check-pr.outputs.existing_pr == 'false'
         run: |
