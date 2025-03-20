@@ -48,6 +48,7 @@ jobs:
       - name: Update llvm-sha.txt
         if: steps.check-pr.outputs.existing_pr == 'false'
         run: |
+          pip install pre-commit
           echo "${{ steps.fetch-sha.outputs.llvm_sha }}" > llvm-sha.txt
           python scripts/update.py llvm-project/ .
           pre-commit run --all-files
