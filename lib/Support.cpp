@@ -32,14 +32,6 @@
 #undef DEBUG_TYPE
 #include "Support/MD5.cpp"
 #undef DEBUG_TYPE
-
-#undef F
-#undef G
-#undef H
-#undef I
-#undef STEP
-#undef SET
-#undef GET
 #include "Support/ManagedStatic.cpp"
 #undef DEBUG_TYPE
 #include "Support/MemAlloc.cpp"

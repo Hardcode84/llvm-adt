@@ -206,16 +206,6 @@ test_files = [
     "ADT/SmallVectorTest.cpp",
 ]
 
-md5_undef = """
-#undef F
-#undef G
-#undef H
-#undef I
-#undef STEP
-#undef SET
-#undef GET
-"""
-
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("llvm_root")
@@ -261,7 +251,5 @@ if __name__ == "__main__":
 
             f.write(f'#include "{file}"\n')
             f.write("#undef DEBUG_TYPE\n")
-            if file.endswith("MD5.cpp"):
-                f.write(md5_undef)
 
     print("Done")
