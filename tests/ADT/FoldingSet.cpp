@@ -189,4 +189,3 @@ TEST(FoldingSetTest, SmallReserveChangesNothing) {
 }
 
 }
-
