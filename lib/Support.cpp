@@ -76,6 +76,8 @@
 #undef DEBUG_TYPE
 #include "Support/DivisionByConstantInfo.cpp"
 #undef DEBUG_TYPE
+#include "Support/DynamicAPInt.cpp"
+#undef DEBUG_TYPE
 #include "Support/DynamicLibrary.cpp"
 #undef DEBUG_TYPE
 #include "Support/Errno.cpp"
@@ -185,6 +187,8 @@
 #include "Support/Signposts.cpp"
 #undef DEBUG_TYPE
 #include "Support/SipHash.cpp"
+#undef DEBUG_TYPE
+#include "Support/SlowDynamicAPInt.cpp"
 #undef DEBUG_TYPE
 #include "Support/SmallPtrSet.cpp"
 #undef DEBUG_TYPE
