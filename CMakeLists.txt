@@ -16,7 +16,9 @@ if (LLVM_ADT_UNITY_BUILD)
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/Support.c
     )
 else()
-    file(GLOB_RECURSE SOURCES_LIST ${CMAKE_CURRENT_SOURCE_DIR}/lib/*.cpp)
+    file(GLOB_RECURSE SOURCES_LIST
+        ${CMAKE_CURRENT_SOURCE_DIR}/lib/*.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/lib/*.c)
     list(REMOVE_ITEM SOURCES_LIST ${CMAKE_CURRENT_SOURCE_DIR}/lib/Support.cpp)
     list(REMOVE_ITEM SOURCES_LIST ${CMAKE_CURRENT_SOURCE_DIR}/lib/Support.c)
 endif()
