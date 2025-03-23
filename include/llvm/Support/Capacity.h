@@ -28,4 +28,3 @@ static inline size_t capacity_in_bytes(const T &x) {
 } // end namespace llvm
 
 #endif
-
