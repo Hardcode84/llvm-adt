@@ -1732,4 +1732,3 @@ TEST(ConvertUTFTest, UTF8ToUTF32PartialLenient) {
       ConvertUTFResultContainer(sourceExhausted).withScalars(0x0041),
       "\x41\xc2", true));
 }
-
