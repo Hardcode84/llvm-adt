@@ -72,9 +72,9 @@
 #undef DEBUG_TYPE
 #include "Support/DeltaAlgorithm.cpp"
 #undef DEBUG_TYPE
-#include "Support/DivisionByConstantInfo.cpp"
+#include "Support/DeltaTree.cpp"
 #undef DEBUG_TYPE
-#include "Support/DynamicAPInt.cpp"
+#include "Support/DivisionByConstantInfo.cpp"
 #undef DEBUG_TYPE
 #include "Support/DynamicLibrary.cpp"
 #undef DEBUG_TYPE
@@ -172,8 +172,6 @@
 #undef DEBUG_TYPE
 #include "Support/Regex.cpp"
 #undef DEBUG_TYPE
-#include "Support/RewriteBuffer.cpp"
-#undef DEBUG_TYPE
 #include "Support/SHA1.cpp"
 #undef DEBUG_TYPE
 #include "Support/SHA256.cpp"
@@ -187,8 +185,6 @@
 #include "Support/Signposts.cpp"
 #undef DEBUG_TYPE
 #include "Support/SipHash.cpp"
-#undef DEBUG_TYPE
-#include "Support/SlowDynamicAPInt.cpp"
 #undef DEBUG_TYPE
 #include "Support/SmallPtrSet.cpp"
 #undef DEBUG_TYPE
