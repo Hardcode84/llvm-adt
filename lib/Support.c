@@ -1,5 +1,10 @@
 #include "Support/regcomp.c"
+#undef GOODFLAGS
 #include "Support/regerror.c"
+#undef GOODFLAGS
 #include "Support/regexec.c"
+#undef GOODFLAGS
 #include "Support/regfree.c"
+#undef GOODFLAGS
 #include "Support/regstrlcpy.c"
+#undef GOODFLAGS
