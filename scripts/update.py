@@ -753,6 +753,10 @@ if __name__ == "__main__":
             dst_path.mkdir(parents=True, exist_ok=True)
             shutil.copy(src=src_file, dst=dst_path)
 
+    replacement = {
+        "Support/RewriteRope.cpp": ("getRoot", "getRewriteRopeRoot"),
+    }
+
     # Amalgamate lib sources
     print("Amalgamating lib sources")
     with open(src_dir / "Support.cpp", "w") as f:
@@ -760,14 +764,14 @@ if __name__ == "__main__":
             if not file.endswith(".cpp"):
                 continue
 
-            if file == "Support/RewriteRope.cpp":
-                f.write("#define getRoot getRewriteRopeRoot\n")
+            if repl := replacement.get(file, None):
+                f.write(f"#define {repl[0]} {repl[1]}\n")
 
             f.write(f'#include "{file}"\n')
             f.write("#undef DEBUG_TYPE\n")
 
-            if file == "Support/RewriteRope.cpp":
-                f.write("#undef getRoot\n")
+            if repl := replacement.get(file, None):
+                f.write(f"#undef {repl[0]}\n")
 
     with open(src_dir / "Support.c", "w") as f:
         for file in src_files:
