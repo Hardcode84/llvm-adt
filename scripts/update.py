@@ -440,8 +440,8 @@ src_files = [
     "Support/RWMutex.cpp",
     "Support/RandomNumberGenerator.cpp",
     "Support/Regex.cpp",
-    # "Support/RewriteBuffer.cpp",
-    # "Support/RewriteRope.cpp",
+    "Support/RewriteBuffer.cpp",
+    "Support/RewriteRope.cpp",
     "Support/SHA1.cpp",
     "Support/SHA256.cpp",
     "Support/ScaledNumber.cpp",
@@ -577,7 +577,7 @@ test_files = [
     # "ADT/PostOrderIteratorTest.cpp",
     "ADT/PriorityWorklistTest.cpp",
     "ADT/RangeAdapterTest.cpp",
-    # "ADT/RewriteBufferTest.cpp",
+    "ADT/RewriteBufferTest.cpp",
     "ADT/SCCIteratorTest.cpp",
     "ADT/STLExtrasTest.cpp",
     "ADT/STLForwardCompatTest.cpp",
@@ -760,8 +760,14 @@ if __name__ == "__main__":
             if not file.endswith(".cpp"):
                 continue
 
+            if file == "Support/RewriteRope.cpp":
+                f.write("#define getRoot getRewriteRopeRoot\n")
+
             f.write(f'#include "{file}"\n')
             f.write("#undef DEBUG_TYPE\n")
+
+            if file == "Support/RewriteRope.cpp":
+                f.write("#undef getRoot\n")
 
     with open(src_dir / "Support.c", "w") as f:
         for file in src_files:

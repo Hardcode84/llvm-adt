@@ -174,6 +174,12 @@
 #undef DEBUG_TYPE
 #include "Support/Regex.cpp"
 #undef DEBUG_TYPE
+#include "Support/RewriteBuffer.cpp"
+#undef DEBUG_TYPE
+#define getRoot getRewriteRopeRoot
+#include "Support/RewriteRope.cpp"
+#undef DEBUG_TYPE
+#undef getRoot
 #include "Support/SHA1.cpp"
 #undef DEBUG_TYPE
 #include "Support/SHA256.cpp"
