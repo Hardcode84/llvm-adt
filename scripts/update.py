@@ -266,6 +266,7 @@ include_files = [
     "llvm/Support/Printable.h",
     "llvm/Support/Process.h",
     "llvm/Support/Program.h",
+    "llvm/Support/ProgramStack.h",
     "llvm/Support/RISCVAttributeParser.h",
     "llvm/Support/RISCVAttributes.h",
     "llvm/Support/RISCVISAUtils.h",
