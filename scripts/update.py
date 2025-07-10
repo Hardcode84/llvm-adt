@@ -14,6 +14,7 @@ include_files = [
     "llvm-c/ExternC.h",
     "llvm-c/Support.h",
     "llvm-c/Types.h",
+    "llvm-c/Visibility.h",
     "llvm/ADT/ADL.h",
     "llvm/ADT/APFixedPoint.h",
     "llvm/ADT/APFloat.h",
