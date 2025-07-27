@@ -127,6 +127,7 @@ include_files = [
     "llvm/ADT/iterator_range.h",
     "llvm/ADT/simple_ilist.h",
     "llvm/Demangle/Demangle.h",
+    "llvm/Demangle/DemangleConfig.h",
     "llvm/Support/AArch64AttributeParser.h",
     "llvm/Support/AArch64BuildAttributes.h",
     "llvm/Support/AMDGPUAddrSpace.h",
