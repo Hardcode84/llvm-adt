@@ -236,8 +236,6 @@
 #undef DEBUG_TYPE
 #include "Support/Twine.cpp"
 #undef DEBUG_TYPE
-#include "Support/TypeSize.cpp"
-#undef DEBUG_TYPE
 #include "Support/Unicode.cpp"
 #undef DEBUG_TYPE
 #include "Support/UnicodeCaseFold.cpp"
