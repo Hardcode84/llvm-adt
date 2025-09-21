@@ -473,7 +473,6 @@ src_files = [
     "Support/ToolOutputFile.cpp",
     "Support/TrieRawHashMap.cpp",
     "Support/Twine.cpp",
-    "Support/TypeSize.cpp",
     "Support/Unicode.cpp",
     "Support/UnicodeCaseFold.cpp",
     "Support/UnicodeNameToCodepoint.cpp",
