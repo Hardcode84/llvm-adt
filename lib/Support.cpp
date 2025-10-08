@@ -118,6 +118,8 @@
 #undef DEBUG_TYPE
 #include "Support/JSON.cpp"
 #undef DEBUG_TYPE
+#include "Support/Jobserver.cpp"
+#undef DEBUG_TYPE
 #include "Support/KnownBits.cpp"
 #undef DEBUG_TYPE
 #include "Support/LEB128.cpp"
