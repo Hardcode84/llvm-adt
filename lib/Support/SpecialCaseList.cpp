@@ -15,9 +15,13 @@
 
 #include "llvm/Support/SpecialCaseList.h"
 #include "llvm/ADT/STLExtras.h"
+#include "llvm/ADT/StringExtras.h"
+#include "llvm/ADT/StringRef.h"
 #include "llvm/Support/LineIterator.h"
 #include "llvm/Support/MemoryBuffer.h"
 #include "llvm/Support/VirtualFileSystem.h"
+#include <algorithm>
+#include <limits>
 #include <stdio.h>
 #include <string>
 #include <system_error>
@@ -66,14 +70,15 @@ Error SpecialCaseList::Matcher::insert(StringRef Pattern, unsigned LineNumber,
   return Error::success();
 }
 
-unsigned SpecialCaseList::Matcher::match(StringRef Query) const {
+void SpecialCaseList::Matcher::match(
+    StringRef Query,
+    llvm::function_ref<void(StringRef Rule, unsigned LineNo)> Cb) const {
   for (const auto &Glob : reverse(Globs))
     if (Glob->Pattern.match(Query))
-      return Glob->LineNo;
+      Cb(Glob->Name, Glob->LineNo);
   for (const auto &[Regex, LineNumber] : reverse(RegExes))
     if (Regex->match(Query))
-      return LineNumber;
-  return 0;
+      Cb(/*FIXME: there is no users of this param yet */ "", LineNumber);
 }
 
 // TODO: Refactor this to return Expected<...>
@@ -135,7 +140,7 @@ SpecialCaseList::addSection(StringRef SectionStr, unsigned FileNo,
   Sections.emplace_back(SectionStr, FileNo);
   auto &Section = Sections.back();
 
-  if (auto Err = Section.SectionMatcher->insert(SectionStr, LineNo, UseGlobs)) {
+  if (auto Err = Section.SectionMatcher.insert(SectionStr, LineNo, UseGlobs)) {
     return createStringError(errc::invalid_argument,
                              "malformed section at line " + Twine(LineNo) +
                                  ": '" + SectionStr +
@@ -147,18 +152,24 @@ SpecialCaseList::addSection(StringRef SectionStr, unsigned FileNo,
 
 bool SpecialCaseList::parse(unsigned FileIdx, const MemoryBuffer *MB,
                             std::string &Error) {
+  unsigned long long Version = 2;
+
+  StringRef Header = MB->getBuffer();
+  if (Header.consume_front("#!special-case-list-v"))
+    consumeUnsignedInteger(Header, 10, Version);
+
+  // In https://reviews.llvm.org/D154014 we added glob support and planned
+  // to remove regex support in patterns. We temporarily support the
+  // original behavior using regexes if "#!special-case-list-v1" is the
+  // first line of the file. For more details, see
+  // https://discourse.llvm.org/t/use-glob-instead-of-regex-for-specialcaselists/71666
+  bool UseGlobs = Version > 1;
+
   Section *CurrentSection;
   if (auto Err = addSection("*", FileIdx, 1).moveInto(CurrentSection)) {
     Error = toString(std::move(Err));
     return false;
   }
-
-  // In https://reviews.llvm.org/D154014 we added glob support and planned to
-  // remove regex support in patterns. We temporarily support the original
-  // behavior using regexes if "#!special-case-list-v1" is the first line of the
-  // file. For more details, see
-  // https://discourse.llvm.org/t/use-glob-instead-of-regex-for-specialcaselists/71666
-  bool UseGlobs = !MB->getBuffer().starts_with("#!special-case-list-v1\n");
 
   for (line_iterator LineIt(*MB, /*SkipBlanks=*/true, /*CommentMarker=*/'#');
        !LineIt.is_at_eof(); LineIt++) {
@@ -218,8 +229,8 @@ std::pair<unsigned, unsigned>
 SpecialCaseList::inSectionBlame(StringRef Section, StringRef Prefix,
                                 StringRef Query, StringRef Category) const {
   for (const auto &S : reverse(Sections)) {
-    if (S.SectionMatcher->match(Section)) {
-      unsigned Blame = inSectionBlame(S.Entries, Prefix, Query, Category);
+    if (S.SectionMatcher.matchAny(Section)) {
+      unsigned Blame = S.getLastMatch(Prefix, Query, Category);
       if (Blame)
         return {S.FileIdx, Blame};
     }
@@ -227,17 +238,29 @@ SpecialCaseList::inSectionBlame(StringRef Section, StringRef Prefix,
   return NotFound;
 }
 
-unsigned SpecialCaseList::inSectionBlame(const SectionEntries &Entries,
-                                         StringRef Prefix, StringRef Query,
-                                         StringRef Category) const {
+const SpecialCaseList::Matcher *
+SpecialCaseList::Section::findMatcher(StringRef Prefix,
+                                      StringRef Category) const {
   SectionEntries::const_iterator I = Entries.find(Prefix);
   if (I == Entries.end())
-    return 0;
+    return nullptr;
   StringMap<Matcher>::const_iterator II = I->second.find(Category);
   if (II == I->second.end())
-    return 0;
+    return nullptr;
 
-  return II->getValue().match(Query);
+  return &II->second;
+}
+
+unsigned SpecialCaseList::Section::getLastMatch(StringRef Prefix,
+                                                StringRef Query,
+                                                StringRef Category) const {
+  unsigned LastLine = 0;
+  if (const Matcher *M = findMatcher(Prefix, Category)) {
+    M->match(Query, [&](StringRef, unsigned LineNo) {
+      LastLine = std::max(LastLine, LineNo);
+    });
+  }
+  return LastLine;
 }
 
 } // namespace llvm
