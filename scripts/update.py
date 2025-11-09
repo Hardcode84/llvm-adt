@@ -116,7 +116,6 @@ include_files = [
     "llvm/ADT/bit.h",
     "llvm/ADT/edit_distance.h",
     "llvm/ADT/fallible_iterator.h",
-    "llvm/ADT/identity.h",
     "llvm/ADT/ilist.h",
     "llvm/ADT/ilist_base.h",
     "llvm/ADT/ilist_iterator.h",
