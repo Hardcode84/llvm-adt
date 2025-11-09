@@ -124,6 +124,7 @@ include_files = [
     "llvm/ADT/ilist_node_options.h",
     "llvm/ADT/iterator.h",
     "llvm/ADT/iterator_range.h",
+    "llvm/ADT/RadixTree.h",
     "llvm/ADT/simple_ilist.h",
     "llvm/Demangle/Demangle.h",
     "llvm/Demangle/DemangleConfig.h",
