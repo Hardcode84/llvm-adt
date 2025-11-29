@@ -298,7 +298,6 @@ include_files = [
     "llvm/Support/SuffixTreeNode.h",
     "llvm/Support/SwapByteOrder.h",
     "llvm/Support/SystemUtils.h",
-    "llvm/Support/SystemZ/zOSSupport.h",
     "llvm/Support/TarWriter.h",
     "llvm/Support/TargetOpcodes.def",
     "llvm/Support/TargetSelect.h",
