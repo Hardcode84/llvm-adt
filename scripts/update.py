@@ -230,6 +230,7 @@ include_files = [
     "llvm/Support/HashBuilder.h",
     "llvm/Support/HexagonAttributeParser.h",
     "llvm/Support/HexagonAttributes.h",
+    "llvm/Support/IOSandbox.h",
     "llvm/Support/InitLLVM.h",
     "llvm/Support/InstructionCost.h",
     "llvm/Support/JSON.h",
