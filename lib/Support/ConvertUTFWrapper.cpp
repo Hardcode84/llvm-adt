@@ -314,3 +314,4 @@ bool IsSingleCodeUnitUTF32Codepoint(unsigned V) {
 }
 
 } // end namespace llvm
+
