@@ -114,6 +114,8 @@
 #undef DEBUG_TYPE
 #include "Support/IntEqClasses.cpp"
 #undef DEBUG_TYPE
+#include "Support/IntegerInclusiveInterval.cpp"
+#undef DEBUG_TYPE
 #include "Support/IntervalMap.cpp"
 #undef DEBUG_TYPE
 #include "Support/JSON.cpp"
